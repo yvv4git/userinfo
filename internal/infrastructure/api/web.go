@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/yvv4git/userinfo/internal/infrastructure/config"
@@ -31,7 +32,17 @@ func (w *Web) Run(ctx context.Context) error {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 
-	router.POST("/userinfo", w.UserInfoHandler)
+	// Config for CORS
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     w.cfg.CQRSAddresses,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
+	apiGroup := router.Group("/api")
+	apiGroup.POST("/userinfo", w.UserInfoHandler)
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%d", w.cfg.Host, w.cfg.Port),

@@ -31,12 +31,14 @@
 </template>
 
 <script>
+import config from '@/config';
+
 export default {
     name: 'PageMain',
     methods: {
         async fetchIP() {
             try {
-                const response = await fetch('https://api.ipify.org?format=json');
+                const response = await fetch(config.ipifyUrl);
                 const data = await response.json();
                 return data.ip;
             } catch (error) {
@@ -76,7 +78,7 @@ export default {
                     location: await this.getLocation(),
                 };
 
-                await fetch('https://example.com/api/userinfo', {
+                await fetch(config.backendUrl, {
                     method: 'POST',
                     body: JSON.stringify(userInfo),
                     headers: {

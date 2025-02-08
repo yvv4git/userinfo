@@ -16,9 +16,10 @@ type (
 	}
 
 	API struct {
-		Host            string `envconfig:"HOST"`
-		Port            int    `envconfig:"PORT"`
-		ShutdownTimeout int    `envconfig:"SHUTDOWN_TIMEOUT_SECONDS"`
+		Host            string   `envconfig:"HOST"`
+		Port            int      `envconfig:"PORT"`
+		ShutdownTimeout int      `envconfig:"SHUTDOWN_TIMEOUT_SECONDS"`
+		CQRSAddresses   []string `envconfig:"CQRS_ADDRESSES"`
 	}
 )
 
