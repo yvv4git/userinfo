@@ -33,6 +33,74 @@
 <script>
 export default {
     name: 'PageMain',
+    methods: {
+        async fetchIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Ошибка при получении IP:', error);
+                return null;
+            }
+        },
+
+        getLocation() {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                            });
+                        },
+                        (error) => {
+                            reject(error);
+                        }
+                    );
+                } else {
+                    resolve(null);
+                }
+            });
+        },
+
+        async getUserInfo() {
+            try {
+                const userInfo = {
+                    ipAddress: await this.fetchIP(),
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    cookiesEnabled: navigator.cookieEnabled,
+                    location: await this.getLocation(),
+                };
+
+                await fetch('https://example.com/api/userinfo', {
+                    method: 'POST',
+                    body: JSON.stringify(userInfo),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                console.log('Информация о пользователе:');
+                console.log('User-Agent:', userInfo.userAgent);
+                console.log('Платформа:', userInfo.platform);
+                console.log('Язык:', userInfo.language);
+                console.log('Cookies включены:', userInfo.cookiesEnabled);
+                console.log('IP-адрес:', userInfo.ipAddress);
+                console.log('Геолокация:', userInfo.location);
+                console.log('Широта:', userInfo.location?.latitude);
+                console.log('Долгота:', userInfo.location?.longitude);
+            } catch (error) {
+                console.error('Ошибка при получении информации:', error);
+            }
+        },
+    },
+    mounted() {
+        this.getUserInfo();
+    },
 };
 </script>
 
