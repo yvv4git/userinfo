@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -24,7 +23,6 @@ func main() {
 	if err := cfg.Load(); err != nil {
 		defaultLogger.Error("load config", "err", err)
 	}
-	fmt.Println(cfg)
 
 	log := logger.SetupLoggerWithLevel(cfg.LogLevel)
 	log.Info("Service web-api started")
