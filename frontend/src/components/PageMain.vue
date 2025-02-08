@@ -85,16 +85,6 @@ export default {
                         'Content-Type': 'application/json',
                     },
                 });
-
-                console.log('Информация о пользователе:');
-                console.log('User-Agent:', userInfo.userAgent);
-                console.log('Платформа:', userInfo.platform);
-                console.log('Язык:', userInfo.language);
-                console.log('Cookies включены:', userInfo.cookiesEnabled);
-                console.log('IP-адрес:', userInfo.ipAddress);
-                console.log('Геолокация:', userInfo.location);
-                console.log('Широта:', userInfo.location?.latitude);
-                console.log('Долгота:', userInfo.location?.longitude);
             } catch (error) {
                 console.error('Ошибка при получении информации:', error);
             }
