@@ -1,5 +1,5 @@
-up:
+compose_up:
 	docker compose up -d
 
-down:
+compose_down:
 	docker compose down
