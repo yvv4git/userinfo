@@ -2,9 +2,9 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json ./
 
-RUN yarn install --frozen-lockfile
+RUN npm install --frozen-lockfile
 
 COPY . ./
 
@@ -12,9 +12,10 @@ FROM node:18
 
 WORKDIR /app
 
-# Копируем файлы из builder-контейнера
 COPY --from=builder /app ./
 
 EXPOSE 8080
 
-CMD ["yarn", "serve"]
+ENV HOST=0.0.0.0
+
+CMD ["npm", "run", "serve", "--", "--port", "8080"]
