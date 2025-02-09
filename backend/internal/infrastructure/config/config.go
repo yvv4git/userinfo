@@ -19,7 +19,7 @@ type (
 		Host            string   `envconfig:"HOST"`
 		Port            int      `envconfig:"PORT"`
 		ShutdownTimeout int      `envconfig:"SHUTDOWN_TIMEOUT_SECONDS"`
-		CQRSAddresses   []string `envconfig:"CQRS_ADDRESSES"`
+		CORSAddresses   []string `envconfig:"CORS_ADDRESSES"`
 	}
 )
 

@@ -34,8 +34,8 @@ func (w *Web) Run(ctx context.Context) error {
 
 	// Config for CORS
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     w.cfg.CQRSAddresses,
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowOrigins:     w.cfg.CORSAddresses,                                 // Какие домены могут обращаться к ресурсу
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, // Какие методы могут быть использованы
 		AllowHeaders:     []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
